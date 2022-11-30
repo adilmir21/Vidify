@@ -61,7 +61,6 @@ public class OutgoingInvitation extends AppCompatActivity {
         setContentView(R.layout.activity_outgoing_invitation);
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        //inviterToken = FirebaseMessaging.getInstance().getToken().toString();
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
         meetingtype = getIntent().getStringExtra("type");
         if(meetingtype!=null)
