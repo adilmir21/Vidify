@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1012726761036",
+    "project_id": "vidify-1704e",
+    "storage_bucket": "vidify-1704e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012726761036:android:b8a75d13accb6dfcf796e9",
+        "android_client_info": {
+          "package_name": "com.example.vidify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012726761036-d048iptevjn5o37gno14balelth949p2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxkT_Sm284-_b427AFLZx9QJxg4lh-nec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012726761036-d048iptevjn5o37gno14balelth949p2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

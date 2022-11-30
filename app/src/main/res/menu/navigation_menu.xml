@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item android:id="@+id/menuProfile"
+    android:icon="@drawable/profile"
+    android:title="Profile"
+    />
+
+    <item android:title="Other">
+        <menu>
+            <item android:id="@+id/menuSettings"
+                android:icon="@drawable/settingss"
+                android:title="Settings"
+                />
+            <item android:id="@+id/menuSupport"
+                android:icon="@drawable/support"
+                android:title="Customer Support"
+                />
+            <item android:id="@+id/menuInfo"
+                android:icon="@drawable/info"
+                android:title="About Us"
+                />
+            <item android:id="@+id/userID"
+                android:icon="@drawable/id"
+                android:title="Copy User ID"
+                />
+            <item android:id="@+id/AccSignOut"
+                android:icon="@drawable/out"
+                android:title="Sign Out"
+                />
+        </menu>
+    </item>
+</menu>
