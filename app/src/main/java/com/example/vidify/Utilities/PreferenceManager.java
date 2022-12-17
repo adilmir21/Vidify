@@ -3,6 +3,8 @@ package com.example.vidify.Utilities;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Calendar;
+
 public class PreferenceManager {
     private SharedPreferences sharedPreferences;
     public PreferenceManager(Context context)
@@ -27,10 +29,19 @@ public class PreferenceManager {
         editor.apply();
 
     }
-
     public String getString(String key)
     {
         return sharedPreferences.getString(key,null);
+    }
+    public void putLong(String Key, Long val)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(Key,val);
+        editor.apply();
+    }
+    public long getLong(String Key)
+    {
+        return  sharedPreferences.getLong(Key,0);
     }
 
     public void clearPreference()

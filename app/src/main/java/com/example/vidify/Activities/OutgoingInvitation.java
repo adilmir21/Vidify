@@ -164,6 +164,7 @@ public class OutgoingInvitation extends AppCompatActivity {
 
              JSONObject body = new JSONObject();
              JSONObject data = new JSONObject();
+             JSONObject notification = new JSONObject();
              data.put(Constants.REMOTE_MSG_TYPE,Constants.REMOTE_MSG_INVITATION);
              data.put(Constants.REMOTE_MSG_MEETING_TYPE,meetingType);
              data.put(Constants.KEY_NAME,preferenceManager.getString(Constants.KEY_NAME));
@@ -173,6 +174,12 @@ public class OutgoingInvitation extends AppCompatActivity {
              meetingRoom = preferenceManager.getString(Constants.KEY_USER_ID) + "_" + UUID.randomUUID().toString().substring(0,5);
              data.put(Constants.REMOTE_MSG_MEETING_ROOM,meetingRoom);
 
+             notification.put("title","Incoming Call");
+             notification.put("text",preferenceManager.getString(Constants.KEY_NAME));
+             notification.put("click_action","OPEN_ACTIVITY_1");
+             notification.put("setAutoCancel",true);
+
+             body.put("notification",notification);
              body.put(Constants.REMOTE_MSG_DATA,data);
              body.put("priority","high");
              body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens);

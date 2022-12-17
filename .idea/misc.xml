@@ -25,19 +25,31 @@
         <entry key="..\:/Android Projects/Vidify 2.0/app/src/main/res/menu/sidemenu.xml" value="0.14957264957264957" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/drawable/button_style.xml" value="0.1715" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/drawable/textbox.xml" value="0.1715" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout-land/activity_incoming_invitation.xml" value="0.22" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout-large/after_signup.xml" value="0.1496365968362548" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout-ldltr-land/activity_outgoing_invitation.xml" value="0.22" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout-xlarge/after_signup.xml" value="0.18" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/activity_alarm.xml" value="0.14957264957264957" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/activity_dashboard.xml" value="0.22" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/activity_incoming_invitation.xml" value="0.14957264957264957" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/activity_menu_item_loaded.xml" value="0.14957264957264957" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/activity_outgoing_invitation.xml" value="0.14957264957264957" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/activity_signup.xml" value="0.22" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/after_signup.xml" value="0.14" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/fragment_info.xml" value="0.14957264957264957" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/fragment_profile.xml" value="0.18" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/fragment_settings.xml" value="0.14957264957264957" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/fragment_support.xml" value="0.18" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/header.xml" value="0.14957264957264957" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/item_container_user.xml" value="0.48303715670436187" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/layout_navigation_header.xml" value="0.2" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/no_wifi.xml" value="0.14871794871794872" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/second_frame.xml" value="0.14871794871794872" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/tablayout.xml" value="0.14871794871794872" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/toast.xml" value="0.2" />
+        <entry key="..\:/Android Projects/Vidify/app/src/main/res/layout/wifi.xml" value="0.25" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/menu/menu.xml" value="0.14957264957264957" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/menu/navigation_menu.xml" value="0.1452991452991453" />
         <entry key="..\:/Android Projects/Vidify/app/src/main/res/menu/sharecode.xml" value="0.18" />

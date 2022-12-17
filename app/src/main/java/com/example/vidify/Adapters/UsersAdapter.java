@@ -1,6 +1,7 @@
 package com.example.vidify.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vidify.Activities.Alarm;
 import com.example.vidify.FireBase.DBClass;
 import com.example.vidify.FireBase.DBInterface;
 import com.example.vidify.Listeners.UsersListener;
@@ -47,6 +50,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.setUserData(users.get(position));
+
     }
 
     @Override
@@ -64,7 +68,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         TextView textFirstChar, textUserName, textEmail;
         ImageView imageAudio, imageVideo;
         ConstraintLayout userContainer;
-        ImageView imageSelected,imageRemove;
+        ImageView imageSelected,imageRemove,imageAlarm;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +83,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             imageSelected = itemView.findViewById(R.id.imageSelected);
 
             imageRemove = itemView.findViewById(R.id.remove);
+            imageAlarm = itemView.findViewById(R.id.alarm);
         }
         void setUserData(User user)
         {
@@ -104,6 +109,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                     imageVideo.setVisibility(View.GONE);
                     imageAudio.setVisibility(View.GONE);
                     imageRemove.setVisibility(View.VISIBLE);
+                    imageAlarm.setVisibility(View.VISIBLE);
                     usersListener.onMultipleUsersAction(true);
                 }
                 return  true;
@@ -118,6 +124,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                     imageVideo.setVisibility(View.VISIBLE);
                     imageAudio.setVisibility(View.VISIBLE);
                     imageRemove.setVisibility(View.GONE);
+                    imageAlarm.setVisibility(View.GONE);
                     if(selectedUsers.size() == 0)
                     {
                         usersListener.onMultipleUsersAction(false);
@@ -129,6 +136,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                     {
                         selectedUsers.add(user);
                         imageRemove.setVisibility(View.GONE);
+                        imageAlarm.setVisibility(View.GONE);
                         imageSelected.setVisibility(View.VISIBLE);
                         imageVideo.setVisibility(View.GONE);
                         imageAudio.setVisibility(View.GONE);
@@ -139,7 +147,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             imageRemove.setOnClickListener(v->
             {
                 DBInterface dbInterface = new DBClass(context);
-                dbInterface.deleteOneRow(user.name);
+                dbInterface.deleteOneRow(user.id);
                 users.remove(user);
                 notifyDataSetChanged();
                 imageSelected.setVisibility(View.GONE);
@@ -147,6 +155,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                 imageAudio.setVisibility(View.VISIBLE);
                 imageRemove.setVisibility(View.GONE);
                 usersListener.onMultipleUsersAction(false);
+            });
+            imageAlarm.setOnClickListener(v->
+            {
+                Intent intent = new Intent(context, Alarm.class);
+                intent.putExtra("UserName",user.name);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             });
         }
 

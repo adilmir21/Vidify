@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,13 +50,21 @@ public class IncomingInvitation extends AppCompatActivity {
     MediaPlayer mp;
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            check();
+        }
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_invitation);
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
         meetingType = getIntent().getStringExtra(Constants.REMOTE_MSG_MEETING_TYPE);
+
         checkIfFriend(getIntent().getStringExtra(Constants.KEY_NAME),getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN),"Available");
-        Log.d("moja check", "checking ");
 
         if (meetingType != null) {
             if (meetingType.equals("video")) {
@@ -103,6 +112,11 @@ public class IncomingInvitation extends AppCompatActivity {
             timer.cancel();
             sendInvitationResponse(Constants.REMOTE_MSG_INVITATION_REJECTED, getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN));
         });
+    }
+    public void check()
+    {
+        mp.stop();
+        sendInvitationResponse(Constants.REMOTE_MSG_INVITATION_REJECTED, getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN));
     }
 
     private void sendInvitationResponse(String type, String receiverToken) {
@@ -170,6 +184,7 @@ public class IncomingInvitation extends AppCompatActivity {
     private BroadcastReceiver invitationResponseReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             String type = intent.getStringExtra(Constants.REMOTE_MSG_INVITATION_RESPONSE);
             if (type != null) {
                 if (type.equals(Constants.REMOTE_MSG_INVITATION_CANCELLED)) {
@@ -210,7 +225,8 @@ public class IncomingInvitation extends AppCompatActivity {
                 "Yes. I know "+names+" ",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dbInterface.addFriend(names,tokens,emails);
+                        PreferenceManager preferenceManager = new PreferenceManager(getApplicationContext());
+                        dbInterface.addFriend(preferenceManager.getString(Constants.KEY_USER_ID),names,tokens,emails);
                         dialog.cancel();
                     }
                 });
@@ -229,10 +245,12 @@ public class IncomingInvitation extends AppCompatActivity {
         {
             while (cursor.moveToNext()) {
 
+                String ids = cursor.getString(0);
                 String name = cursor.getString(1);
                 String token = cursor.getString(2);
                 String email = cursor.getString(3);
                 User user = new User();
+                user.id = ids;
                 user.name = name;
                 user.email = email;
                 user.token = token;

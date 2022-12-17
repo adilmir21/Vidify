@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/inter</item>
         <item>@font/josefin_sans_bold</item>
+        <item>@font/press_start_2p</item>
     </array>
 </resources>

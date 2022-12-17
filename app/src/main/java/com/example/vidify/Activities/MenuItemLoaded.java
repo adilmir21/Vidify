@@ -26,21 +26,6 @@ public class MenuItemLoaded extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_item_loaded);
-//
-//        tabLayout = findViewById(R.id.tabLayout);
-//        viewPager = findViewById(R.id.viewPager);
-//
-//        tabLayout.setupWithViewPager(viewPager);
-//        tabLayout.selectTab();
-//        VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-//        vpAdapter.addFragment(new ProfileFragment(getApplicationContext()),"Profile");
-//        vpAdapter.addFragment(new SettingsFragment(),"Settings");
-//        vpAdapter.addFragment(new InfoFragment(),"About Us");
-//        vpAdapter.addFragment(new SupportFragment(),"Customer Support");
-//        viewPager.setAdapter(vpAdapter);
-
-//        ActionBar actionBar = getActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
         String name = getIntent().getStringExtra("name");
         switch (name) {
             case "Profile":

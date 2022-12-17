@@ -1,5 +1,7 @@
 package com.example.vidify.Activities;
 
+import android.app.ActionBar;
+import android.app.AlarmManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -14,10 +16,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,6 +37,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -102,6 +109,13 @@ public class OtherUsers extends AppCompatActivity implements UsersListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.after_signup);
+        View views = findViewById(R.id.mainview);
+        if(views!=null) {
+            String tag = (String) views.getTag();
+            if (tag.equals("xlarge")) {
+                Log.d("moja", "X Large Screen");
+            }
+        }
 
         adView = findViewById(R.id.adView);
         initializeBannerAd(appUnitId);
@@ -122,7 +136,8 @@ public class OtherUsers extends AppCompatActivity implements UsersListener {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        signOut();
+
+
                     }
                 });
 
@@ -184,6 +199,7 @@ public class OtherUsers extends AppCompatActivity implements UsersListener {
                     intent.putExtra("userName",preferenceManager.getString(Constants.KEY_NAME));
                     intent.putExtra("id",preferenceManager.getString(Constants.KEY_USER_ID));
                     intent.putExtra("email",preferenceManager.getString(Constants.KEY_EMAIL));
+                    intent.putExtra("AppName",getPackageName());
                     drawerLayout.closeDrawer(GravityCompat.START);
                     startActivity(intent);
                 }
@@ -206,10 +222,21 @@ public class OtherUsers extends AppCompatActivity implements UsersListener {
                 }
                 else
                 {
+                    LayoutInflater inflater = getLayoutInflater();
+                    View layout = inflater.inflate(R.layout.wifi,null);
+                    ImageView imageView = layout.findViewById(R.id.notConnected);
+                    imageView.setImageResource(R.drawable.internet);
+                    TextView text = (TextView) layout.findViewById(R.id.textWifi);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setGravity(Gravity.BOTTOM, 0, -5);
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
                     friendsArrayList.clear();
                     usersAdapter.notifyDataSetChanged();
                     error.setImageResource(R.drawable.wifi);
                     error.setVisibility(View.VISIBLE);
+
                 }
             }
         });
@@ -445,11 +472,13 @@ public class OtherUsers extends AppCompatActivity implements UsersListener {
             friendsArrayList = new ArrayList<>();
             while (cursor.moveToNext())
             {
-
+                String ids = cursor.getString(0);
                 String name = cursor.getString(1);
                 String token = cursor.getString(2);
                 String email = cursor.getString(3);
                 User user = new User();
+                Log.d("moja list", "getFriends: "+ids);
+                user.id = ids;
                 user.name = name;
                 user.email = email;
                 user.token = token;
@@ -491,25 +520,61 @@ public class OtherUsers extends AppCompatActivity implements UsersListener {
                                 if (!userID.equals(myUserId) && userID.contains(documentSnapshot.getId())) {
 
                                     User user = new User();
+                                    user.id = documentSnapshot.getId();
                                     user.name = documentSnapshot.getString(Constants.KEY_NAME);
                                     user.email = "Available";
                                     user.token = documentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                                    Log.d("Moja", "onComplete: "+ user.id);
                                     if (user.token == null) {
                                         user.email = "Not Available";
                                     } else {
                                         user.email = "Available";
                                     }
+
                                     if(!user.name.isEmpty()) {
-                                        DBInterface dbInterface = new DBClass(getApplicationContext());
-
-                                        dbInterface.addFriend(user.name, user.token, user.email);
-                                        // enteredID.setVisibility(View.GONE);
-
-                                        getFriends();
+                                        boolean found = false;
+                                        for(int i=0;i<friendsArrayList.size();i++)
+                                        {
+                                            if(friendsArrayList.get(i).name.contains(user.name))
+                                            {
+                                                found = true;
+                                            }
+                                        }
+                                        if(!found) {
+                                            DBInterface dbInterface = new DBClass(getApplicationContext());
+                                            dbInterface.addFriend(user.id,user.name, user.token, user.email);
+                                            getFriends();
+                                            LayoutInflater inflater = getLayoutInflater();
+                                            View layout = inflater.inflate(R.layout.toast,null);
+                                            ImageView imageViewss = layout.findViewById(R.id.imageFriends);
+                                            imageViewss.setImageResource(R.drawable.friends);
+                                            TextView text = (TextView) layout.findViewById(R.id.textSuccess);
+                                            text.setText(user.name + " is added your friend");
+                                            Toast toast = new Toast(getApplicationContext());
+                                            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                                            toast.setDuration(Toast.LENGTH_LONG);
+                                            toast.setView(layout);
+                                            toast.show();
+                                        }
+                                        else
+                                        {
+                                            LayoutInflater inflater = getLayoutInflater();
+                                            View layout = inflater.inflate(R.layout.toast,null);
+                                            ImageView imageViewss = layout.findViewById(R.id.imageFriends);
+                                            imageViewss.setImageResource(R.drawable.good);
+                                            TextView text = (TextView) layout.findViewById(R.id.textSuccess);
+                                            text.setText(user.name + " is already your friend");
+                                            Toast toast = new Toast(getApplicationContext());
+                                            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                                            toast.setDuration(Toast.LENGTH_LONG);
+                                            toast.setView(layout);
+                                            toast.show();
+                                            //Toast.makeText(getApplicationContext(),"Friend all ready Exists",Toast.LENGTH_SHORT).show();
+                                        }
                                         break;
                                     }
                                 }
-                                //Log.d("moja", "Yeah buddy (3)");
+
                             }
 
                         }
@@ -532,7 +597,6 @@ public class OtherUsers extends AppCompatActivity implements UsersListener {
         {
             error.setVisibility(View.GONE);
         }
-        Log.d("moja", "Refreshing");
         ConnectivityManager cm = (ConnectivityManager) getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {
@@ -566,5 +630,36 @@ public class OtherUsers extends AppCompatActivity implements UsersListener {
     {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
+    }
+    public void checkIfChanged()
+    {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_USERS)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        String myUserId = preferenceManager.getString(Constants.KEY_USER_ID);
+
+                        DBInterface dbInterface = new DBClass(getApplicationContext());
+
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                for(int i=0;i<friendsArrayList.size();i++)
+                                {
+                                    Log.d("mojas", " "+ friendsArrayList.get(i).name);
+                                    if(friendsArrayList.get(i).id.contains(documentSnapshot.getId()))
+                                    {
+                                        String id = documentSnapshot.getString(Constants.KEY_USER_ID);
+                                        String name = documentSnapshot.getString(Constants.KEY_NAME);
+                                        String email = friendsArrayList.get(i).email;
+                                        String token = documentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                                        dbInterface.update(id, name,token,email);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
     }
 }

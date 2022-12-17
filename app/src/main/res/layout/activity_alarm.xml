@@ -5,30 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".InfoFragment">
+    tools:context=".Activities.Alarm">
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
+        android:id="@+id/alarmText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/press_start_2p"
-        android:text="VIDIFY"
+        android:text="ALARM"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="25dp"
+        android:textSize="19dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <VideoView
-        android:id="@+id/TeamVideo"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
+    <Button
+        android:id="@+id/cancelAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:fontFamily="@font/inter"
+        android:text="Cancel Reminder"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="9dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.531" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
